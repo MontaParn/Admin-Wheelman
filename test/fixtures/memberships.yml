@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice_active:
+  athlete: alice
+  package_plan: full_annual
+  start_date: <%= 30.days.ago.to_date %>
+  end_date: <%= 5.days.from_now.to_date %>
+  price_paid: 30000.00
+  cancelled_at:
+
+alice_expired:
+  athlete: alice
+  package_plan: run_monthly
+  start_date: <%= 90.days.ago.to_date %>
+  end_date: <%= 60.days.ago.to_date %>
+  price_paid: 1200.00
+  cancelled_at:
+
+bob_active:
+  athlete: bob
+  package_plan: run_monthly
+  start_date: <%= 10.days.ago.to_date %>
+  end_date: <%= 60.days.from_now.to_date %>
+  price_paid: 1200.00
+  cancelled_at:

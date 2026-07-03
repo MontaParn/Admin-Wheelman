@@ -1,0 +1,84 @@
+<% content_for :title, @athlete.name %>
+
+<div class="flex items-start justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold"><%= @athlete.name %></h1>
+    <p class="text-sm text-gray-500">
+      เทรนมาแล้ว <%= @athlete.tenure_days / 30 %> เดือน
+      <% if @athlete.phone.present? %> · <%= @athlete.phone %><% end %>
+    </p>
+  </div>
+  <div class="flex gap-2">
+    <%= link_to "แก้ไขข้อมูล", edit_athlete_path(@athlete), class: "rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50" %>
+    <%= link_to "สมัคร/ต่อแพคเกจ", new_athlete_membership_path(@athlete), class: "rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700" %>
+  </div>
+</div>
+
+<% if @athlete.notes.present? %>
+  <p class="mb-6 rounded-md bg-gray-50 px-4 py-3 text-sm text-gray-700"><%= @athlete.notes %></p>
+<% end %>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <section>
+    <h2 class="text-lg font-semibold mb-3">ประวัติแพคเกจ</h2>
+    <div class="space-y-3">
+      <% @memberships.each do |membership| %>
+        <div class="rounded-lg border border-gray-200 bg-white p-4">
+          <div class="flex items-center justify-between">
+            <span class="font-medium"><%= membership.package_plan.name %></span>
+            <%= membership_status_badge(membership) %>
+          </div>
+          <p class="text-sm text-gray-500 mt-1">
+            <%= membership.start_date.strftime("%d %b %Y") %> - <%= membership.end_date.strftime("%d %b %Y") %>
+            · <%= number_to_currency membership.price_paid, unit: "฿", format: "%u%n" %>
+          </p>
+          <div class="mt-2 space-y-1">
+            <% membership.payments.each do |payment| %>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-600">
+                  ยอด <%= number_to_currency payment.amount, unit: "฿", format: "%u%n" %>
+                  กำหนดชำระ <%= payment.due_on.strftime("%d %b %Y") %>
+                </span>
+                <div class="flex items-center gap-2">
+                  <%= payment_status_badge(payment) %>
+                  <% unless payment.paid_on.present? %>
+                    <%= button_to "บันทึกว่าจ่ายแล้ว", payment_path(payment), method: :patch, class: "text-xs text-blue-600 hover:underline cursor-pointer bg-transparent border-0 p-0" %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <%= link_to "แก้ไข", edit_athlete_membership_path(@athlete, membership), class: "mt-2 inline-block text-xs text-gray-500 hover:underline" %>
+        </div>
+      <% end %>
+      <% if @memberships.empty? %>
+        <p class="text-sm text-gray-400">ยังไม่มีประวัติแพคเกจ</p>
+      <% end %>
+    </div>
+  </section>
+
+  <section>
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold">ประวัติการแข่งขัน</h2>
+      <%= link_to "เพิ่มรายการแข่งขัน", new_athlete_race_entry_path(@athlete), class: "text-sm text-blue-600 hover:underline" %>
+    </div>
+    <div class="space-y-2">
+      <% @race_entries.each do |race_entry| %>
+        <div class="rounded-lg border border-gray-200 bg-white p-4 flex items-center justify-between">
+          <div>
+            <p class="font-medium"><%= race_entry.race_name %></p>
+            <p class="text-sm text-gray-500">
+              <%= race_entry.race_date.strftime("%d %b %Y") %>
+              <% if race_entry.discipline.present? %> · <%= race_entry.discipline %><% end %>
+              <% if race_entry.result.present? %> · <%= race_entry.result %><% end %>
+            </p>
+          </div>
+          <%= button_to "ลบ", athlete_race_entry_path(@athlete, race_entry), method: :delete, data: { turbo_confirm: "ลบรายการนี้?" }, class: "text-xs text-red-600 hover:underline cursor-pointer bg-transparent border-0 p-0" %>
+        </div>
+      <% end %>
+      <% if @race_entries.empty? %>
+        <p class="text-sm text-gray-400">ยังไม่มีประวัติการแข่งขัน</p>
+      <% end %>
+    </div>
+  </section>
+</div>

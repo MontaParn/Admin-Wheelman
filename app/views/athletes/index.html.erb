@@ -1,0 +1,36 @@
+<% content_for :title, "นักกีฬา" %>
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold">นักกีฬา</h1>
+  <%= link_to "เพิ่มนักกีฬา", new_athlete_path, class: "rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700" %>
+</div>
+
+<div class="overflow-hidden rounded-lg border border-gray-200 bg-white">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">ชื่อ</th>
+        <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">เทรนมาแล้ว</th>
+        <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">สถานะแพคเกจปัจจุบัน</th>
+        <th class="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">หมดอายุ</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      <% @athletes.each do |athlete| %>
+        <tr>
+          <td class="px-4 py-3">
+            <%= link_to athlete.name, athlete, class: "font-medium text-gray-900 hover:underline" %>
+          </td>
+          <td class="px-4 py-3 text-sm text-gray-500"><%= athlete.tenure_days / 30 %> เดือน</td>
+          <% if (membership = athlete.current_membership) %>
+            <td class="px-4 py-3"><%= membership_status_badge(membership) %></td>
+            <td class="px-4 py-3 text-sm text-gray-500"><%= membership.end_date.strftime("%d %b %Y") %></td>
+          <% else %>
+            <td class="px-4 py-3 text-sm text-gray-400">ไม่มีแพคเกจ</td>
+            <td class="px-4 py-3 text-sm text-gray-400">-</td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

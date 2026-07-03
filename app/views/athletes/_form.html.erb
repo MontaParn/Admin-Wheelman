@@ -1,0 +1,43 @@
+<%= form_with model: athlete, class: "space-y-4 max-w-lg" do |f| %>
+  <% if athlete.errors.any? %>
+    <div class="rounded-md bg-red-50 px-4 py-3 text-sm text-red-800">
+      <ul class="list-disc list-inside">
+        <% athlete.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "ชื่อ", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= f.label :phone, "เบอร์โทร", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :phone, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= f.label :line_user_id, "LINE User ID", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :line_user_id, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= f.label :started_on, "วันที่เริ่มเทรน", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.date_field :started_on, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= f.label :notes, "บันทึกเพิ่มเติม", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, rows: 3, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <%= f.check_box :active, class: "rounded border-gray-300" %>
+    <%= f.label :active, "ยังเทรนอยู่", class: "text-sm text-gray-700" %>
+  </div>
+
+  <%= f.submit "บันทึก", class: "rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 cursor-pointer" %>
+<% end %>

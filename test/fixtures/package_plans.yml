@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+full_annual:
+  name: วิ่ง+ว่าย+ปั่น รายปี
+  run: true
+  swim: true
+  bike: true
+  billing_cycle: 2
+  duration_days: 365
+  price: 30000.00
+  active: true
+
+run_monthly:
+  name: วิ่งอย่างเดียว รายเดือน
+  run: true
+  swim: false
+  bike: false
+  billing_cycle: 0
+  duration_days: 30
+  price: 1200.00
+  active: true

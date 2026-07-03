@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice_active_payment:
+  membership: alice_active
+  amount: 30000.00
+  due_on: <%= 30.days.ago.to_date %>
+  paid_on: <%= 30.days.ago.to_date %>
+
+alice_expired_payment:
+  membership: alice_expired
+  amount: 1200.00
+  due_on: <%= 90.days.ago.to_date %>
+  paid_on: <%= 85.days.ago.to_date %>
+
+bob_active_payment:
+  membership: bob_active
+  amount: 1200.00
+  due_on: <%= 10.days.ago.to_date %>
+  paid_on: <%= 10.days.ago.to_date %>
