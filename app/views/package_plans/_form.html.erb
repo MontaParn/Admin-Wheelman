@@ -1,0 +1,56 @@
+<%= form_with model: package_plan, class: "space-y-5 max-w-lg bg-white rounded-2xl border border-gray-100 shadow-sm p-8" do |f| %>
+  <% if package_plan.errors.any? %>
+    <div class="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700">
+      <ul class="list-disc list-inside">
+        <% package_plan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "ชื่อแพคเกจ", class: field_label_class %>
+    <%= f.text_field :name, class: field_input_class %>
+    <%= field_helper_text "เช่น วิ่ง+ว่าย+ปั่น รายปี" %>
+  </div>
+
+  <div>
+    <span class="<%= field_label_class %>">ชนิดกีฬา</span>
+    <div class="mt-1.5 flex gap-6">
+      <label class="flex items-center gap-2 text-sm text-gray-700">
+        <%= f.check_box :run, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %> วิ่ง
+      </label>
+      <label class="flex items-center gap-2 text-sm text-gray-700">
+        <%= f.check_box :swim, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %> ว่ายน้ำ
+      </label>
+      <label class="flex items-center gap-2 text-sm text-gray-700">
+        <%= f.check_box :bike, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %> ปั่นจักรยาน
+      </label>
+    </div>
+    <%= field_helper_text "เลือกได้มากกว่าหนึ่งชนิด" %>
+  </div>
+
+  <div>
+    <%= f.label :billing_cycle, "รอบชำระ", class: field_label_class %>
+    <%= f.select :billing_cycle, PackagePlan::BILLING_CYCLE_LABELS.map { |key, label| [ label, key ] }, {}, class: field_input_class %>
+  </div>
+
+  <div>
+    <%= f.label :duration_days, "จำนวนวันที่ใช้งานได้", class: field_label_class %>
+    <%= f.number_field :duration_days, class: field_input_class %>
+    <%= field_helper_text "จำนวนวันนับจากวันที่เริ่มจนถึงวันหมดอายุ" %>
+  </div>
+
+  <div>
+    <%= f.label :price, "ราคา (บาท)", class: field_label_class %>
+    <%= f.number_field :price, step: 0.01, class: field_input_class %>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <%= f.check_box :active, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %>
+    <%= f.label :active, "เปิดใช้งาน (แสดงในตอนสมัครแพคเกจใหม่)", class: "text-sm text-gray-700" %>
+  </div>
+
+  <%= f.submit "บันทึก", class: "rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>
+<% end %>

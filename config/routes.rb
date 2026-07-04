@@ -13,4 +13,5 @@ Rails.application.routes.draw do
 
   resources :payments, only: %i[update]
   resources :reminders, only: %i[create]
+  resources :package_plans, except: %i[show]
 end

@@ -10,7 +10,7 @@
   </div>
   <div class="flex gap-2">
     <%= link_to "แก้ไขข้อมูล", edit_athlete_path(@athlete), class: "rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50" %>
-    <%= link_to "สมัคร/ต่อแพคเกจ", new_athlete_membership_path(@athlete), class: "rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700" %>
+    <%= link_to "สมัคร/ต่อแพคเกจ", new_athlete_membership_path(@athlete), class: "rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700" %>
   </div>
 </div>
 
@@ -42,7 +42,7 @@
                 <div class="flex items-center gap-2">
                   <%= payment_status_badge(payment) %>
                   <% unless payment.paid_on.present? %>
-                    <%= button_to "บันทึกว่าจ่ายแล้ว", payment_path(payment), method: :patch, class: "text-xs text-blue-600 hover:underline cursor-pointer bg-transparent border-0 p-0" %>
+                    <%= button_to "บันทึกว่าจ่ายแล้ว", payment_path(payment), method: :patch, class: "text-xs text-green-700 hover:underline cursor-pointer bg-transparent border-0 p-0" %>
                   <% end %>
                 </div>
               </div>
@@ -60,7 +60,7 @@
   <section>
     <div class="flex items-center justify-between mb-3">
       <h2 class="text-lg font-semibold">ประวัติการแข่งขัน</h2>
-      <%= link_to "เพิ่มรายการแข่งขัน", new_athlete_race_entry_path(@athlete), class: "text-sm text-blue-600 hover:underline" %>
+      <%= link_to "เพิ่มรายการแข่งขัน", new_athlete_race_entry_path(@athlete), class: "text-sm text-green-700 hover:underline" %>
     </div>
     <div class="space-y-2">
       <% @race_entries.each do |race_entry| %>

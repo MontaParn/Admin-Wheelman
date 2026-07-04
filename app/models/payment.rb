@@ -5,6 +5,7 @@ class Payment < ApplicationRecord
 
   scope :paid, -> { where.not(paid_on: nil) }
   scope :pending, -> { where(paid_on: nil) }
+  scope :overdue, -> { pending.where(due_on: ...Date.current) }
 
   def status
     return :paid if paid_on.present?

@@ -1,6 +1,8 @@
 class PackagePlan < ApplicationRecord
   has_many :memberships, dependent: :restrict_with_error
 
+  BILLING_CYCLE_LABELS = { monthly: "รายเดือน", semi_annual: "ราย 6 เดือน", annual: "รายปี" }.freeze
+
   enum :billing_cycle, { monthly: 0, semi_annual: 1, annual: 2 }
 
   validates :name, presence: true
@@ -11,6 +13,10 @@ class PackagePlan < ApplicationRecord
 
   def disciplines
     [ ("วิ่ง" if run), ("ว่ายน้ำ" if swim), ("ปั่นจักรยาน" if bike) ].compact
+  end
+
+  def billing_cycle_label
+    BILLING_CYCLE_LABELS.fetch(billing_cycle.to_sym)
   end
 
   private

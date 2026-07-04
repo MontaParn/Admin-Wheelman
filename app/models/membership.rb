@@ -17,7 +17,9 @@ class Membership < ApplicationRecord
 
   def status
     return :cancelled if cancelled?
-    end_date < Date.current ? :expired : :active
+    return :expired if end_date < Date.current
+    return :pending_payment if payments.overdue.exists?
+    :active
   end
 
   def days_until_expiry

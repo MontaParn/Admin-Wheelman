@@ -27,6 +27,13 @@ class MembershipTest < ActiveSupport::TestCase
     assert_equal :cancelled, cancelled.status
   end
 
+  test "status is pending_payment when a payment is overdue, even before end_date" do
+    membership = memberships(:bob_active)
+    membership.payments.create!(amount: 1200, due_on: 1.day.ago.to_date)
+
+    assert_equal :pending_payment, membership.status
+  end
+
   test "reminder_message includes athlete name and package plan" do
     membership = memberships(:alice_active)
     message = membership.reminder_message
