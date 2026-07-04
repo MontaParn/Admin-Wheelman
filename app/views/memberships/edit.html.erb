@@ -1,5 +1,7 @@
 <% content_for :title, "แก้ไขแพคเกจ - #{@athlete.name}" %>
 
+<%= back_link athlete_path(@athlete) %>
+
 <h1 class="text-2xl font-bold mb-6">แก้ไขแพคเกจ - <%= @athlete.name %></h1>
 <p class="text-sm text-gray-500 mb-4"><%= @membership.package_plan.name %></p>
 

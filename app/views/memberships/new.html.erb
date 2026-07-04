@@ -1,5 +1,7 @@
 <% content_for :title, "สมัครแพคเกจ - #{@athlete.name}" %>
 
+<%= back_link athlete_path(@athlete) %>
+
 <h1 class="text-2xl font-bold mb-6">สมัคร/ต่อแพคเกจ - <%= @athlete.name %></h1>
 
 <%= form_with model: @membership, url: athlete_memberships_path(@athlete), class: "space-y-5 max-w-lg bg-white rounded-2xl border border-gray-100 shadow-sm p-8" do |f| %>
@@ -15,7 +17,8 @@
 
   <div>
     <%= f.label :package_plan_id, "แพคเกจ", class: field_label_class %>
-    <%= f.collection_select :package_plan_id, @package_plans, :id, ->(plan) { "#{plan.name} - #{number_to_currency(plan.price, unit: '฿', format: '%u%n')}" }, { prompt: "เลือกแพคเกจ" }, class: field_input_class %>
+    <%= render "shared/custom_select", form: f, attribute: :package_plan_id,
+        options: [ [ "เลือกแพคเกจ", "" ] ] + @package_plans.map { |plan| [ "#{plan.name} - #{number_to_currency(plan.price, unit: '฿', format: '%u%n')}", plan.id ] } %>
     <%= field_helper_text "ระบบจะคำนวณวันหมดอายุและยอดชำระให้อัตโนมัติ" %>
   </div>
 

@@ -17,7 +17,7 @@
     </thead>
     <tbody class="divide-y divide-gray-200">
       <% @athletes.each do |athlete| %>
-        <tr>
+        <tr data-row-link="<%= athlete_path(athlete) %>" class="cursor-pointer hover:bg-gray-50">
           <td class="px-4 py-3">
             <%= link_to athlete.name, athlete, class: "font-medium text-gray-900 hover:underline" %>
           </td>

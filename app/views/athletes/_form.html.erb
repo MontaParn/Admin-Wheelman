@@ -39,9 +39,8 @@
     <%= field_helper_text "บันทึกเพิ่มเติมเกี่ยวกับนักกีฬา (ถ้ามี)" %>
   </div>
 
-  <div class="flex items-center gap-2">
-    <%= f.check_box :active, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %>
-    <%= f.label :active, "ยังเทรนอยู่", class: "text-sm text-gray-700" %>
+  <div>
+    <%= toggle_switch f, :active, "ยังเทรนอยู่" %>
   </div>
 
   <%= f.submit "บันทึก", class: "rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>

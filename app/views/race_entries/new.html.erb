@@ -1,5 +1,7 @@
 <% content_for :title, "เพิ่มรายการแข่งขัน - #{@athlete.name}" %>
 
+<%= back_link athlete_path(@athlete) %>
+
 <h1 class="text-2xl font-bold mb-6">เพิ่มรายการแข่งขัน - <%= @athlete.name %></h1>
 
 <%= form_with model: @race_entry, url: athlete_race_entries_path(@athlete), class: "space-y-5 max-w-lg bg-white rounded-2xl border border-gray-100 shadow-sm p-8" do |f| %>

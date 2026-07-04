@@ -1,9 +1,11 @@
 class PackagePlan < ApplicationRecord
   has_many :memberships, dependent: :restrict_with_error
 
-  BILLING_CYCLE_LABELS = { monthly: "รายเดือน", semi_annual: "ราย 6 เดือน", annual: "รายปี" }.freeze
+  BILLING_CYCLE_LABELS = {
+    daily: "รายวัน", monthly: "รายเดือน", quarterly: "ราย 3 เดือน", semi_annual: "ราย 6 เดือน", annual: "รายปี"
+  }.freeze
 
-  enum :billing_cycle, { monthly: 0, semi_annual: 1, annual: 2 }
+  enum :billing_cycle, { monthly: 0, semi_annual: 1, annual: 2, daily: 3, quarterly: 4 }
 
   validates :name, presence: true
   validates :duration_days, :price, presence: true, numericality: { greater_than: 0 }
@@ -12,7 +14,7 @@ class PackagePlan < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   def disciplines
-    [ ("วิ่ง" if run), ("ว่ายน้ำ" if swim), ("ปั่นจักรยาน" if bike) ].compact
+    [ ("🏃 วิ่ง" if run), ("🏊 ว่ายน้ำ" if swim), ("🚴 ปั่นจักรยาน" if bike) ].compact
   end
 
   def billing_cycle_label

@@ -17,23 +17,18 @@
 
   <div>
     <span class="<%= field_label_class %>">ชนิดกีฬา</span>
-    <div class="mt-1.5 flex gap-6">
-      <label class="flex items-center gap-2 text-sm text-gray-700">
-        <%= f.check_box :run, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %> วิ่ง
-      </label>
-      <label class="flex items-center gap-2 text-sm text-gray-700">
-        <%= f.check_box :swim, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %> ว่ายน้ำ
-      </label>
-      <label class="flex items-center gap-2 text-sm text-gray-700">
-        <%= f.check_box :bike, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %> ปั่นจักรยาน
-      </label>
+    <div class="mt-1.5 flex flex-wrap gap-3">
+      <%= discipline_toggle f, :run, "🏃", "วิ่ง" %>
+      <%= discipline_toggle f, :swim, "🏊", "ว่ายน้ำ" %>
+      <%= discipline_toggle f, :bike, "🚴", "ปั่นจักรยาน" %>
     </div>
     <%= field_helper_text "เลือกได้มากกว่าหนึ่งชนิด" %>
   </div>
 
   <div>
     <%= f.label :billing_cycle, "รอบชำระ", class: field_label_class %>
-    <%= f.select :billing_cycle, PackagePlan::BILLING_CYCLE_LABELS.map { |key, label| [ label, key ] }, {}, class: field_input_class %>
+    <%= render "shared/custom_select", form: f, attribute: :billing_cycle,
+        options: PackagePlan::BILLING_CYCLE_LABELS.map { |key, label| [ label, key ] } %>
   </div>
 
   <div>
@@ -47,9 +42,8 @@
     <%= f.number_field :price, step: 0.01, class: field_input_class %>
   </div>
 
-  <div class="flex items-center gap-2">
-    <%= f.check_box :active, class: "h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900" %>
-    <%= f.label :active, "เปิดใช้งาน (แสดงในตอนสมัครแพคเกจใหม่)", class: "text-sm text-gray-700" %>
+  <div>
+    <%= toggle_switch f, :active, "เปิดใช้งาน (แสดงในตอนสมัครแพคเกจใหม่)" %>
   </div>
 
   <%= f.submit "บันทึก", class: "rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>
