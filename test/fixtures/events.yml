@@ -1,0 +1,32 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+triathlon_camp:
+  name: ค่ายไตรกีฬาหัวหิน
+  category: camp
+  run: true
+  swim: true
+  bike: true
+  description: ค่ายซ้อมรวมสามวันสองคืน
+  location: หัวหิน
+  start_date: <%= Date.new(Date.current.year, 9, 10) %>
+  end_date: <%= Date.new(Date.current.year, 9, 12) %>
+
+trail_race:
+  name: เขาใหญ่เทรล
+  category: race
+  run: true
+  swim: false
+  bike: false
+  description: วิ่งเทรลระยะ 21 กม.
+  location: เขาใหญ่
+  start_date: <%= Date.new(Date.current.year, 3, 5) %>
+  end_date: <%= Date.new(Date.current.year, 3, 5) %>
+
+last_years_race:
+  name: กิจกรรมปีที่แล้ว
+  category: race
+  run: true
+  swim: false
+  bike: false
+  start_date: <%= Date.new(Date.current.year - 1, 5, 1) %>
+  end_date: <%= Date.new(Date.current.year - 1, 5, 1) %>

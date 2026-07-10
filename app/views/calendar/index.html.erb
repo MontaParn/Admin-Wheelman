@@ -1,0 +1,37 @@
+<% content_for :title, "ปฏิทิน" %>
+
+<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+  <div class="flex items-center gap-3">
+    <%= category_filter_pill(@active_categories, "race", "Race", year: @year) %>
+    <%= category_filter_pill(@active_categories, "camp", "Camp", year: @year) %>
+  </div>
+
+  <%= link_to new_event_path, class: "rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700" do %>
+    + สร้างกิจกรรม
+  <% end %>
+</div>
+
+<div class="mb-6 flex items-center justify-center gap-4">
+  <%= link_to calendar_path(year: @year - 1, categories: @active_categories), class: "rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50" do %>
+    &lsaquo;
+  <% end %>
+  <span class="w-20 text-center text-lg font-semibold"><%= @year %></span>
+  <%= link_to calendar_path(year: @year + 1, categories: @active_categories), class: "rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50" do %>
+    &rsaquo;
+  <% end %>
+</div>
+
+<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+  <% (1..12).each do |month| %>
+    <div class="min-h-40 rounded-xl border border-gray-200 bg-white p-4">
+      <h2 class="mb-2 text-sm font-bold text-green-700"><%= thai_month_label(Date.new(@year, month, 1)).split(" ").first %></h2>
+      <div class="space-y-1.5">
+        <% (@events_by_month[month] || []).each do |event| %>
+          <%= link_to event_path(event), class: "block" do %>
+            <%= event_calendar_tag(event) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

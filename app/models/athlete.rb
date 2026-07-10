@@ -1,6 +1,8 @@
 class Athlete < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :race_entries, dependent: :destroy
+  has_many :event_attendances, dependent: :destroy
+  has_many :events, through: :event_attendances
   has_many :payments, through: :memberships
   has_many :reminders, through: :memberships
 

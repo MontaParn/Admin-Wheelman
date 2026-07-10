@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   root "dashboard#index"
   get "podium", to: "podium#index"
+  get "calendar", to: "calendar#index"
 
   resources :athletes do
     resources :memberships, only: %i[new create edit update]
@@ -14,4 +15,8 @@ Rails.application.routes.draw do
   resources :payments, only: %i[update]
   resources :reminders, only: %i[create]
   resources :package_plans, except: %i[show]
+
+  resources :events do
+    resources :event_attendances, only: %i[create destroy]
+  end
 end

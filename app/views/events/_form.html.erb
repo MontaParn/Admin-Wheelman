@@ -1,0 +1,88 @@
+<%= form_with model: event, class: "max-w-5xl bg-white rounded-2xl border border-gray-100 shadow-sm p-8" do |f| %>
+  <% if event.errors.any? %>
+    <div class="mb-5 rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700">
+      <ul class="list-disc list-inside">
+        <% event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 gap-x-8 gap-y-5 md:grid-cols-2">
+    <div class="md:col-span-2">
+      <%= f.label :name, "ชื่อกิจกรรม", class: field_label_class %>
+      <%= f.text_field :name, class: field_input_class %>
+    </div>
+
+    <div>
+      <span class="<%= field_label_class %>">รูปภาพ (ไม่บังคับ)</span>
+      <div class="mt-1.5">
+        <% if event.photo.attached? %>
+          <div class="relative inline-block">
+            <%= image_tag event.photo, class: "h-28 w-28 rounded-xl object-cover" %>
+            <label class="absolute -right-2 -top-2 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-white text-red-600 shadow ring-1 ring-gray-200 hover:bg-red-50">
+              <%= f.check_box :remove_photo, class: "sr-only" %>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+                <path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clip-rule="evenodd" />
+              </svg>
+            </label>
+          </div>
+        <% else %>
+          <label class="flex h-24 w-24 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-gray-300 text-gray-400 hover:border-green-600 hover:text-green-600">
+            <%= f.file_field :photo, accept: "image/*", class: "sr-only" %>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-8 w-8">
+              <path fill-rule="evenodd" d="M1.5 6A2.25 2.25 0 0 1 3.75 3.75h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+            </svg>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <div>
+      <span class="<%= field_label_class %>">ชนิดกีฬา</span>
+      <div class="mt-1.5 flex flex-wrap gap-3">
+        <%= discipline_toggle f, :run, "🏃", "วิ่ง" %>
+        <%= discipline_toggle f, :swim, "🏊", "ว่ายน้ำ" %>
+        <%= discipline_toggle f, :bike, "🚴", "ปั่นจักรยาน" %>
+      </div>
+      <%= field_helper_text "เลือกได้มากกว่าหนึ่งชนิด" %>
+    </div>
+
+    <div>
+      <span class="<%= field_label_class %>">ประเภท</span>
+      <div class="mt-1.5 flex gap-3">
+        <%= category_toggle f, :race %>
+        <%= category_toggle f, :camp %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.label :start_date, "วันที่เริ่ม", class: field_label_class %>
+      <%= f.date_field :start_date, class: field_input_class %>
+    </div>
+
+    <div>
+      <%= f.label :end_date, "วันที่สิ้นสุด", class: field_label_class %>
+      <%= f.date_field :end_date, class: field_input_class %>
+      <%= field_helper_text "ถ้าเป็นกิจกรรมวันเดียว ใส่วันเดียวกับวันที่เริ่ม" %>
+    </div>
+
+    <div class="md:col-span-2">
+      <%= f.label :description, "รายละเอียด", class: field_label_class %>
+      <%= f.text_area :description, rows: 4, class: field_input_class %>
+    </div>
+
+    <div>
+      <%= f.label :location, "สถานที่", class: field_label_class %>
+      <%= f.text_field :location, class: field_input_class %>
+    </div>
+
+    <div>
+      <%= f.label :google_map_link, "ลิงก์ Google Map (ไม่บังคับ)", class: field_label_class %>
+      <%= f.text_field :google_map_link, class: field_input_class %>
+    </div>
+  </div>
+
+  <%= f.submit "บันทึกกิจกรรม", class: "mt-6 rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>
+<% end %>

@@ -1,0 +1,72 @@
+<% content_for :title, @event.name %>
+
+<%= back_link calendar_path %>
+
+<div class="max-w-5xl">
+  <div class="mb-6 flex items-start justify-between">
+    <div>
+      <div class="mb-1 flex items-center gap-3">
+        <h1 class="text-2xl font-bold"><%= @event.name %></h1>
+        <%= event_category_badge(@event) %>
+      </div>
+      <p class="text-sm text-gray-500"><%= @event.disciplines.join(" · ") %></p>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to "แก้ไข", edit_event_path(@event), class: "rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50" %>
+      <%= button_to "ลบ", event_path(@event), method: :delete, data: { turbo_confirm: "ลบกิจกรรม \"#{@event.name}\"?" }, class: "rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 cursor-pointer" %>
+    </div>
+  </div>
+
+  <% if @event.photo.attached? %>
+    <%= image_tag @event.photo, class: "mb-6 h-64 w-full rounded-2xl object-cover" %>
+  <% end %>
+
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-sm font-semibold text-gray-900">รายละเอียด</h2>
+        <p class="mt-1 whitespace-pre-line text-sm text-gray-600"><%= @event.description.presence || "-" %></p>
+      </div>
+
+      <div>
+        <h2 class="text-sm font-semibold text-gray-900">สถานที่</h2>
+        <p class="mt-1 text-sm text-gray-600"><%= @event.location.presence || "-" %></p>
+        <% if @event.google_map_link.present? && @event.google_map_link.start_with?("http://", "https://") %>
+          <%= link_to @event.google_map_link, @event.google_map_link, target: "_blank", rel: "noopener", class: "text-sm text-green-700 hover:underline" %>
+        <% end %>
+      </div>
+
+      <div>
+        <h2 class="text-sm font-semibold text-gray-900">วันที่</h2>
+        <p class="mt-1 text-sm text-gray-600">
+          <% if @event.single_day? %>
+            <%= @event.start_date.strftime("%d %b %Y") %>
+          <% else %>
+            <%= @event.start_date.strftime("%d %b %Y") %> - <%= @event.end_date.strftime("%d %b %Y") %>
+          <% end %>
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="mb-3 text-sm font-semibold text-gray-900">นักกีฬาที่เข้าร่วม (<%= @event.athletes.count %>)</h2>
+
+      <%= form_with url: event_event_attendances_path(@event), method: :post, class: "mb-4 flex gap-2" do |f| %>
+        <%= f.select :athlete_id, options_from_collection_for_select(@available_athletes, :id, :name), { prompt: "เลือกนักกีฬา" }, class: field_select_class %>
+        <%= f.submit "เพิ่ม", class: "shrink-0 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>
+      <% end %>
+
+      <div class="space-y-2">
+        <% @event.event_attendances.includes(:athlete).each do |attendance| %>
+          <div class="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-2.5">
+            <%= link_to attendance.athlete.name, attendance.athlete, class: "text-sm font-medium text-gray-900 hover:underline" %>
+            <%= button_to "นำออก", event_event_attendance_path(@event, attendance), method: :delete, class: "text-xs text-red-600 hover:underline cursor-pointer bg-transparent border-0 p-0" %>
+          </div>
+        <% end %>
+        <% if @event.athletes.empty? %>
+          <p class="text-sm text-gray-400">ยังไม่มีนักกีฬาเข้าร่วม</p>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
