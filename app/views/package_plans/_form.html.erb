@@ -1,0 +1,50 @@
+<%= form_with model: package_plan, class: "space-y-5 max-w-lg bg-white rounded-2xl border border-gray-100 shadow-sm p-8" do |f| %>
+  <% if package_plan.errors.any? %>
+    <div class="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700">
+      <ul class="list-disc list-inside">
+        <% package_plan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "ชื่อแพคเกจ", class: field_label_class %>
+    <%= f.text_field :name, class: field_input_class %>
+    <%= field_helper_text "เช่น วิ่ง+ว่าย+ปั่น รายปี" %>
+  </div>
+
+  <div>
+    <span class="<%= field_label_class %>">ชนิดกีฬา</span>
+    <div class="mt-1.5 flex flex-wrap gap-3">
+      <%= discipline_toggle f, :run, "🏃", "วิ่ง" %>
+      <%= discipline_toggle f, :swim, "🏊", "ว่ายน้ำ" %>
+      <%= discipline_toggle f, :bike, "🚴", "ปั่นจักรยาน" %>
+    </div>
+    <%= field_helper_text "เลือกได้มากกว่าหนึ่งชนิด" %>
+  </div>
+
+  <div>
+    <%= f.label :billing_cycle, "รอบชำระ", class: field_label_class %>
+    <%= render "shared/custom_select", form: f, attribute: :billing_cycle,
+        options: PackagePlan::BILLING_CYCLE_LABELS.map { |key, label| [ label, key ] } %>
+  </div>
+
+  <div>
+    <%= f.label :duration_days, "จำนวนวันที่ใช้งานได้", class: field_label_class %>
+    <%= f.number_field :duration_days, class: field_input_class %>
+    <%= field_helper_text "จำนวนวันนับจากวันที่เริ่มจนถึงวันหมดอายุ" %>
+  </div>
+
+  <div>
+    <%= f.label :price, "ราคา (บาท)", class: field_label_class %>
+    <%= f.number_field :price, step: 0.01, class: field_input_class %>
+  </div>
+
+  <div>
+    <%= toggle_switch f, :active, "เปิดใช้งาน (แสดงในตอนสมัครแพคเกจใหม่)" %>
+  </div>
+
+  <%= f.submit "บันทึก", class: "rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>
+<% end %>

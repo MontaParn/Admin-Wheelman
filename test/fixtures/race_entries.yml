@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice_race_1:
+  athlete: alice
+  race_name: Laguna Phuket Triathlon
+  race_date: <%= Date.current.beginning_of_year + 2.weeks %>
+  discipline: Olympic Triathlon
+  result: อันดับ 3
+
+alice_race_2:
+  athlete: alice
+  race_name: Bangsaen21
+  race_date: <%= Date.current.beginning_of_year + 4.weeks %>
+  discipline: วิ่ง
+  result: "1:45:00"
+
+bob_race_1:
+  athlete: bob
+  race_name: Bangsaen21
+  race_date: <%= Date.current.beginning_of_year + 4.weeks %>
+  discipline: วิ่ง
+  result: "1:50:00"

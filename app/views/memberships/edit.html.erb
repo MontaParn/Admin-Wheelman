@@ -1,0 +1,38 @@
+<% content_for :title, "แก้ไขแพคเกจ - #{@athlete.name}" %>
+
+<%= back_link athlete_path(@athlete) %>
+
+<h1 class="text-2xl font-bold mb-6">แก้ไขแพคเกจ - <%= @athlete.name %></h1>
+<p class="text-sm text-gray-500 mb-4"><%= @membership.package_plan.name %></p>
+
+<%= form_with model: @membership, url: athlete_membership_path(@athlete, @membership), class: "space-y-5 max-w-lg bg-white rounded-2xl border border-gray-100 shadow-sm p-8" do |f| %>
+  <% if @membership.errors.any? %>
+    <div class="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700">
+      <ul class="list-disc list-inside">
+        <% @membership.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :start_date, "วันที่เริ่ม", class: field_label_class %>
+    <%= f.date_field :start_date, class: field_input_class %>
+    <%= field_helper_text "แก้ไขได้หากต้องการเลื่อนวันเริ่มแพคเกจ" %>
+  </div>
+
+  <div>
+    <%= f.label :end_date, "วันหมดอายุ", class: field_label_class %>
+    <%= f.date_field :end_date, class: field_input_class %>
+    <%= field_helper_text "วันที่แพคเกจนี้จะหมดอายุ" %>
+  </div>
+
+  <div>
+    <%= f.label :cancelled_at, "ยกเลิกเมื่อ", class: field_label_class %>
+    <%= f.date_field :cancelled_at, class: field_input_class %>
+    <%= field_helper_text "เว้นว่างไว้ถ้ายังไม่ต้องการยกเลิก" %>
+  </div>
+
+  <%= f.submit "บันทึก", class: "rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>
+<% end %>

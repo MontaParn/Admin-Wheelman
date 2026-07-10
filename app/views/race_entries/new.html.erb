@@ -1,0 +1,43 @@
+<% content_for :title, "เพิ่มรายการแข่งขัน - #{@athlete.name}" %>
+
+<%= back_link athlete_path(@athlete) %>
+
+<h1 class="text-2xl font-bold mb-6">เพิ่มรายการแข่งขัน - <%= @athlete.name %></h1>
+
+<%= form_with model: @race_entry, url: athlete_race_entries_path(@athlete), class: "space-y-5 max-w-lg bg-white rounded-2xl border border-gray-100 shadow-sm p-8" do |f| %>
+  <% if @race_entry.errors.any? %>
+    <div class="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700">
+      <ul class="list-disc list-inside">
+        <% @race_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :race_name, "ชื่อรายการแข่งขัน", class: field_label_class %>
+    <%= f.text_field :race_name, class: field_input_class %>
+    <%= field_helper_text "ชื่อรายการแข่งขันที่เข้าร่วม" %>
+  </div>
+
+  <div>
+    <%= f.label :race_date, "วันที่แข่ง", class: field_label_class %>
+    <%= f.date_field :race_date, class: field_input_class %>
+    <%= field_helper_text "วันที่จัดการแข่งขัน" %>
+  </div>
+
+  <div>
+    <%= f.label :discipline, "ประเภท", class: field_label_class %>
+    <%= f.text_field :discipline, placeholder: "เช่น Olympic Triathlon", class: field_input_class %>
+    <%= field_helper_text "ประเภทการแข่งขัน" %>
+  </div>
+
+  <div>
+    <%= f.label :result, "ผลการแข่งขัน", class: field_label_class %>
+    <%= f.text_field :result, placeholder: "เช่น อันดับ 3 / เวลา 2:15:30", class: field_input_class %>
+    <%= field_helper_text "ผลการแข่งขัน เช่น อันดับ หรือเวลาที่ทำได้" %>
+  </div>
+
+  <%= f.submit "บันทึก", class: "rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 cursor-pointer" %>
+<% end %>

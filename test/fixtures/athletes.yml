@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice:
+  name: Alice Runner
+  phone: "0812345678"
+  line_user_id: Uabc123
+  started_on: <%= 2.years.ago.to_date %>
+  notes: นักไตรกีฬาตัวยง
+  active: true
+
+bob:
+  name: Bob Sprinter
+  phone: "0898765432"
+  line_user_id: Udef456
+  started_on: <%= 6.months.ago.to_date %>
+  notes:
+  active: true

@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice_in_camp:
+  event: triathlon_camp
+  athlete: alice
+
+bob_in_camp:
+  event: triathlon_camp
+  athlete: bob

@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "reminder_#{@membership.id}" do %>
+  <%= render "memberships/reminder_status", membership: @membership %>
+<% end %>

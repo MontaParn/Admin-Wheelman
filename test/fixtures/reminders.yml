@@ -1,0 +1,8 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice_reminder_today:
+  membership: alice_active
+  channel: 0
+  message_body: ทดสอบข้อความเตือน
+  sent_at: <%= Time.current %>
+  status: 0

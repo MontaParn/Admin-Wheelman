@@ -1,0 +1,6 @@
+<% content_for :title, "แก้ไขแพคเกจ - #{@package_plan.name}" %>
+
+<%= back_link package_plans_path %>
+
+<h1 class="text-2xl font-bold mb-6">แก้ไขแพคเกจ - <%= @package_plan.name %></h1>
+<%= render "form", package_plan: @package_plan %>

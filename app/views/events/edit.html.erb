@@ -1,0 +1,6 @@
+<% content_for :title, "แก้ไขกิจกรรม - #{@event.name}" %>
+
+<%= back_link event_path(@event) %>
+
+<h1 class="text-2xl font-bold mb-6">แก้ไขกิจกรรม - <%= @event.name %></h1>
+<%= render "form", event: @event %>

@@ -1,0 +1,28 @@
+<%
+  current_value = form.object.public_send(attribute).to_s
+  selected_option = options.find { |_, value| value.to_s == current_value }
+%>
+<div data-controller="dropdown" class="relative">
+  <%= form.select attribute, options_for_select(options, current_value), {}, class: "hidden", data: { dropdown_target: "select" } %>
+
+  <button type="button" data-action="click->dropdown#toggle" data-dropdown-target="button"
+    class="<%= field_select_class %> flex items-center text-left cursor-pointer">
+    <span data-dropdown-target="label" class="<%= "text-gray-400" if current_value.blank? %>">
+      <%= selected_option ? selected_option[0] : options.first&.first %>
+    </span>
+  </button>
+
+  <div data-dropdown-target="panel" class="hidden absolute z-10 mt-2 w-full max-h-64 overflow-auto rounded-xl border border-gray-200 bg-white py-1 shadow-lg">
+    <% options.each do |label, value| %>
+      <% is_selected = value.to_s == current_value %>
+      <button type="button" data-action="click->dropdown#select" data-dropdown-target="option"
+        data-value="<%= value %>" data-label="<%= label %>"
+        class="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-sm text-left hover:bg-gray-50 <%= "bg-green-50 text-green-700 font-medium" if is_selected %>">
+        <span><%= label %></span>
+        <svg data-dropdown-target="checkmark" data-value="<%= value %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0 text-green-600 <%= "hidden" unless is_selected %>">
+          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    <% end %>
+  </div>
+</div>

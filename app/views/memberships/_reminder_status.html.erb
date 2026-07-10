@@ -1,0 +1,13 @@
+<% reminder = membership.reminders.sent_today.order(sent_at: :desc).first %>
+<span id="reminder_<%= membership.id %>">
+  <% if reminder&.sent? %>
+    <span class="text-xs text-green-600">ส่งข้อความแล้วเมื่อ <%= reminder.sent_at.strftime("%H:%M") %></span>
+  <% elsif reminder&.failed? %>
+    <div class="flex flex-col items-start gap-1">
+      <span class="text-xs text-red-600">ส่งไม่สำเร็จ</span>
+      <%= button_to "ลองส่งอีกครั้ง", reminders_path(membership_id: membership.id), class: "text-xs text-green-700 hover:underline cursor-pointer bg-transparent border-0 p-0" %>
+    </div>
+  <% else %>
+    <%= button_to "ส่งข้อความเตือน", reminders_path(membership_id: membership.id), class: "text-xs text-green-700 hover:underline cursor-pointer bg-transparent border-0 p-0" %>
+  <% end %>
+</span>
